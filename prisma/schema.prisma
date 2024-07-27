@@ -34,19 +34,6 @@ model Merchant {
   jenis_perangkat      String
 }
 
-model Customer {
-  id           String @id @default(auto()) @map("_id") @db.ObjectId
-  user_id      String @db.ObjectId
-  alamat       String
-  provinsi_id  String
-  kota_id      String
-  kecamatan_id String
-  kelurahan_id String
-  longitude    Float
-  latitude     Float
-  no_telp      String
-}
-
 model MerchantProduk {
   id          String               @id @default(auto()) @map("_id") @db.ObjectId
   merchant_id String               @db.ObjectId
@@ -102,12 +89,4 @@ model LongtermReviewStore {
 model ThingsLongtermReviewStore {
   id                     String                 @id @default(auto()) @map("_id") @db.ObjectId
   nama                   String
-}
-
-model DeliveryOption {
-  id                String     @id @default(auto()) @map("_id") @db.ObjectId
-  nama              String
-  description       String
-  time_multiplier   Float
-  price_multiplier  Float
 }
