@@ -5,18 +5,18 @@ const prisma = new PrismaClient();
 const corsHeaders = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
 };
 
 export async function GET(request) {
     try {
         const url = new URL(request.url);
-        const userId = url.searchParams.get('id');
+        const merchantProdukId = url.searchParams.get('id');
 
-        if (userId) {
-            const pengguna = await prisma.user.findUnique({
-                where: { id: userId },
+        if (merchantProdukId) {
+            const pengguna = await prisma.merchantProduk.findUnique({
+                where: { id: merchantProdukId },
             });
 
             if (pengguna) {
@@ -25,13 +25,13 @@ export async function GET(request) {
                     headers: corsHeaders,
                 });
             } else {
-                return new Response(JSON.stringify({ error: 'User Not Found' }), {
+                return new Response(JSON.stringify({ error: 'merchantProduk Not Found' }), {
                     status: 404,
                     headers: corsHeaders,
                 });
             }
         } else {
-            const pengguna = await prisma.user.findMany();
+            const pengguna = await prisma.merchantProduk.findMany();
 
             return new Response(JSON.stringify(pengguna), {
                 status: 200,
@@ -53,12 +53,26 @@ export async function POST(request) {
     try {
         const data = await request.json();
 
-        const pengguna = await prisma.user.create({
+        const merchantExists = await prisma.merchant.findUnique({
+            where: { id: data.merchant_id },
+        });
+
+        if (!merchantExists) {
+            return new Response(JSON.stringify({ error: 'Invalid merchant_id' }), {
+                status: 400,
+                headers: corsHeaders,
+            });
+        }
+
+        const pengguna = await prisma.merchantProduk.create({
             data: {
+                merchant_id: data.merchant_id,
                 nama: data.nama,
-                role_id: "1",
-                email: data.email,
-                password: data.password,
+                gambar: data.gambar,
+                deskripsi: data.deskripsi,
+                qty: data.qty,
+                price: data.price,
+                discount: data.discount,
             },
         });
 
@@ -80,27 +94,27 @@ export async function POST(request) {
 export async function DELETE(request) {
     try {
         const url = new URL(request.url);
-        const userId = url.searchParams.get('id');
+        const merchantProdukId = url.searchParams.get('id');
 
-        if (!userId) {
+        if (!merchantProdukId) {
             return new Response(JSON.stringify({ error: 'Missing id parameter' }), {
                 status: 400,
                 headers: corsHeaders,
             });
         }
 
-        const deletedUser = await prisma.user.delete({
-            where: { id: userId },
+        const deletedRecord = await prisma.merchantProduk.delete({
+            where: { id: merchantProdukId },
         });
 
-        return new Response(JSON.stringify(deletedUser), {
+        return new Response(JSON.stringify(deletedRecord), {
             status: 200,
             headers: corsHeaders,
         });
     } catch (error) {
         console.error(error);
         if (error.code === 'P2025') {
-            return new Response(JSON.stringify({ error: 'User Not Found' }), {
+            return new Response(JSON.stringify({ error: 'Record Not Found' }), {
                 status: 404,
                 headers: corsHeaders,
             });

@@ -1,6 +1,5 @@
 'use client'
 import { useAtom } from "jotai";
-import { namaSaya } from "../pengguna/penggunaAtom";
 import FormInput from "@/components/molecules/FormInput/FormInput";
 
 const createUser = async (nama, password, email) => {

@@ -19,6 +19,7 @@ model User {
 model Merchant {
   id                   String                 @id @default(auto()) @map("_id") @db.ObjectId
   user_id              String                 @db.ObjectId
+  nama                 String
   alamat               String
   provinsi_id          String
   kota_id              String
@@ -80,11 +81,12 @@ model Bill {
   id                 String         @id @default(auto()) @map("_id") @db.ObjectId
   user_id            String         @db.ObjectId
   merchant_id        String         @db.ObjectId
+  status             String
   subtotal           Float
   delivery_price     Float
   total_bill         Float
   notes              String
-  delivery_option_id String         @db.ObjectId
+  delivery_option_id String
 }
 
 model Review {
