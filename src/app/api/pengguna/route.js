@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { UUID } from 'mongodb';
 
 const prisma = new PrismaClient();
 
@@ -34,8 +35,15 @@ export async function POST(request) {
     try {
         const data = await request.json();
 
-        const pengguna = await prisma.pengguna.create({
-            data,
+        // const pengguna = await reviewEvaluatorCrew(data.review);
+
+        const pengguna = await prisma.User.create({
+            data: {
+                nama: data.nama,
+                role_id: "1",
+                email: data.email,
+                password: data.password,
+            },
         });
 
         return new Response(JSON.stringify(pengguna), {

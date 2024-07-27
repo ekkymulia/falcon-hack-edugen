@@ -13,12 +13,7 @@ model User {
   role_id   String
   email     String    @unique
   password  String
-  Merchants Merchant[]
-  Customers Customer[]
-  Reviews   Review[]
-  Bills     Bill[]
-  OrderBills OrderBill[]
-  LongtermReviewStores LongtermReviewStore[]
+
 }
 
 model Merchant {
@@ -36,10 +31,6 @@ model Merchant {
   tipe_bisnis          String
   rata_rata_penjualan  Float
   jenis_perangkat      String
-  Bills                Bill[]
-  LongtermReviewStores LongtermReviewStore[]
-  User                 User                   @relation(fields: [user_id], references: [id])
-  MerchantProduks      MerchantProduk[]
 }
 
 model Customer {
@@ -53,7 +44,6 @@ model Customer {
   longitude    Float
   latitude     Float
   no_telp      String
-  User         User   @relation(fields: [user_id], references: [id])
 }
 
 model MerchantProduk {
@@ -65,9 +55,6 @@ model MerchantProduk {
   qty         Int
   price       Float
   discount    Float
-  Variants    MerchantProdukVariant[]
-  OrderBills  OrderBill[]
-  Merchant    Merchant             @relation(fields: [merchant_id], references: [id])
 }
 
 model MerchantProdukVariant {
@@ -77,7 +64,6 @@ model MerchantProdukVariant {
   qty                Int
   price              Float
   discount           Float
-  MerchantProduk     MerchantProduk @relation(fields: [merchant_produk_id], references: [id])
 }
 
 model OrderBill {
@@ -88,9 +74,6 @@ model OrderBill {
   qty                Int
   total_price        Float
   notes              String
-  Bill               Bill           @relation(fields: [bill_id], references: [id])
-  User               User           @relation(fields: [user_id], references: [id])
-  MerchantProduk     MerchantProduk @relation(fields: [merchant_produk_id], references: [id])
 }
 
 model Bill {
@@ -102,12 +85,6 @@ model Bill {
   total_bill         Float
   notes              String
   delivery_option_id String         @db.ObjectId
-  User               User           @relation(fields: [user_id], references: [id])
-  Merchant           Merchant       @relation(fields: [merchant_id], references: [id])
-  DeliveryOption     DeliveryOption @relation(fields: [delivery_option_id], references: [id])
-  OrderBills         OrderBill[]
-  Reviews            Review[]       
-  LongtermReviewStores LongtermReviewStore[]     
 }
 
 model Review {
@@ -116,9 +93,6 @@ model Review {
   bill_id              String                 @db.ObjectId
   message              String
   rating               Int
-  User                 User                   @relation(fields: [user_id], references: [id])
-  Bill                 Bill                   @relation(fields: [bill_id], references: [id])
-  LongtermReviewStores LongtermReviewStore[]
 }
 
 model LongtermReviewStore {
@@ -129,17 +103,11 @@ model LongtermReviewStore {
   bill_id                        String                     @db.ObjectId
   things_longterm_review_store_id String                    @db.ObjectId
   things_to_remember             String
-  Review                         Review                     @relation(fields: [review_id], references: [id])
-  User                           User                       @relation(fields: [user_id], references: [id])
-  Merchant                       Merchant                   @relation(fields: [merchant_id], references: [id])
-  Bill                           Bill                       @relation(fields: [bill_id], references: [id])
-  ThingsLongtermReviewStore      ThingsLongtermReviewStore  @relation(fields: [things_longterm_review_store_id], references: [id])
 }
 
 model ThingsLongtermReviewStore {
   id                     String                 @id @default(auto()) @map("_id") @db.ObjectId
   nama                   String
-  LongtermReviewStores   LongtermReviewStore[]
 }
 
 model DeliveryOption {
@@ -148,5 +116,4 @@ model DeliveryOption {
   description       String
   time_multiplier   Float
   price_multiplier  Float
-  Bills             Bill[]
 }
