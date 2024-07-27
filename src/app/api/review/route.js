@@ -28,6 +28,10 @@ export async function POST(request) {
         for (const [key, value] of Object.entries(reviewEvaluator.hasilEkstrasi)) {
             try {
                 const param = JSON.parse(reviewEvaluator.paramObject)[key];
+                
+                if(!value){
+                    continue;
+                }
 
                 await prisma.LongtermReviewStore.create({
                     data: {

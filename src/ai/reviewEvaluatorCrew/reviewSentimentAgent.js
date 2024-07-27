@@ -11,7 +11,7 @@ const model = new ChatOpenAI({
 });
 
 const prompt = ChatPromptTemplate.fromMessages([
-  ["system", "Tentukan sentimen pada review apakah negatif atau positif. jawab hanya dengan kata positif atau negatif"],
+  ["system", "Tentukan sentimen pada review apakah suka atau tidak suka. jawab hanya dengan kata suka atau tidak suka"],
   ["human", "{input}"],
 ]);
 

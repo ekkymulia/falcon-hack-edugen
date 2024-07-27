@@ -11,12 +11,12 @@ const model = new ChatOpenAI({
 });
 
 const prompt = ChatPromptTemplate.fromMessages([
-  ["system", `Berikan hasil ekstraksi yang perlu diingat, dari kriteria yang diinputkan pada parameter dibawah ini
+  ["system", `Berikan alasan hasil ekstraksi yang perlu diingat, dari kriteria yang diinputkan pada parameter dibawah ini
     Point Kriteria:
     {parameter}
     
     jika tidak ada menyebutkan salah satu kriteria diatas, isikan kriteria dengan data string kosong, tetpai key adalah parameter nama
-    berikan output dengan ditengahi oleh tanda garis | (cth:  'harga' | 'murah/mahal/sesuai', ....)
+    berikan output dengan ditengahi oleh tanda garis | (cth jawaban:  'harga' | 'murah/mahal/sepertinya oke', 'rasa' | suka/tidak suka', 'kemasan' | 'bagus/jelek', 'pengiriman' | 'cepat/lama')
     berikan hasil dalam lowercase dan tanpa tanda kutip
   .`],
   ["human", "{review}"],

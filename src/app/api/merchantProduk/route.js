@@ -1,3 +1,4 @@
+import { pineconeStore } from '@/ai/vectorDb/pinecone';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -75,6 +76,8 @@ export async function POST(request) {
                 discount: data.discount,
             },
         });
+
+        const addtovector = await pineconeStore({ ...merchantProduk, nama_toko: merchantExists.nama });
 
         return new Response(JSON.stringify(merchantProduk), {
             status: 200,
