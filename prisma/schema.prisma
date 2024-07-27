@@ -58,14 +58,6 @@ model MerchantProduk {
   discount    Float
 }
 
-model MerchantProdukVariant {
-  id                 String         @id @default(auto()) @map("_id") @db.ObjectId
-  merchant_produk_id String         @db.ObjectId
-  nama               String
-  qty                Int
-  price              Float
-  discount           Float
-}
 
 model OrderBill {
   id                 String         @id @default(auto()) @map("_id") @db.ObjectId
@@ -81,7 +73,7 @@ model Bill {
   id                 String         @id @default(auto()) @map("_id") @db.ObjectId
   user_id            String         @db.ObjectId
   merchant_id        String         @db.ObjectId
-  status             String
+  status             Int
   subtotal           Float
   delivery_price     Float
   total_bill         Float

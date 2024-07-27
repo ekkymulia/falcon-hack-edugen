@@ -96,7 +96,7 @@ export async function postOrderBill(data) {
             user_id: data.user_id,
             merchant_produk_id: data.merchant_produk_id,
             qty: data.qty,
-            price: data.price,
+            total_price: data.price * data.qty,
             notes: data.notes
         },
     });

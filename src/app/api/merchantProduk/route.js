@@ -15,12 +15,12 @@ export async function GET(request) {
         const merchantProdukId = url.searchParams.get('id');
 
         if (merchantProdukId) {
-            const pengguna = await prisma.merchantProduk.findUnique({
+            const merchantProduk = await prisma.merchantProduk.findUnique({
                 where: { id: merchantProdukId },
             });
 
-            if (pengguna) {
-                return new Response(JSON.stringify(pengguna), {
+            if (merchantProduk) {
+                return new Response(JSON.stringify(merchantProduk), {
                     status: 200,
                     headers: corsHeaders,
                 });
@@ -31,9 +31,9 @@ export async function GET(request) {
                 });
             }
         } else {
-            const pengguna = await prisma.merchantProduk.findMany();
+            const merchantProduk = await prisma.merchantProduk.findMany();
 
-            return new Response(JSON.stringify(pengguna), {
+            return new Response(JSON.stringify(merchantProduk), {
                 status: 200,
                 headers: corsHeaders,
             });
@@ -64,7 +64,7 @@ export async function POST(request) {
             });
         }
 
-        const pengguna = await prisma.merchantProduk.create({
+        const merchantProduk = await prisma.merchantProduk.create({
             data: {
                 merchant_id: data.merchant_id,
                 nama: data.nama,
@@ -76,7 +76,7 @@ export async function POST(request) {
             },
         });
 
-        return new Response(JSON.stringify(pengguna), {
+        return new Response(JSON.stringify(merchantProduk), {
             status: 200,
             headers: corsHeaders,
         });

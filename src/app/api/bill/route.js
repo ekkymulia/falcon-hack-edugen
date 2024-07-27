@@ -16,7 +16,7 @@ export async function POST(request) {
         const data = await request.json();
         
         const { user_id, merchant_id, subtotal, delivery_price, total_bill, notes, delivery_option_id, orderBills } = data;
-        const status = "pending";
+        const status = 1;
 
         // Validate orderBills array
         if (!Array.isArray(orderBills) || orderBills.length === 0) {
@@ -58,19 +58,20 @@ export async function POST(request) {
             },
         });
 
-        const orderBillData = {
-            bill_id: bill.id,
-            user_id:bill.user_id,
-            merchant_produk_id:orderBills.merchant_produk_id,
-            qty:orderBills.qty,
-            total_price:orderBills.price,
-            notes:orderBills.notes
-        };
-    
+        orderBills.forEach(async (ob) => {
+            const orderBillData = {
+                bill_id: bill.id,
+                user_id:bill.user_id,
+                merchant_produk_id:ob.merchant_produk_id,
+                qty:ob.qty,
+                price:ob.price,
+                notes:ob.notes
+            };
+            await postOrderBill(orderBillData);
+        })
 
-        await postOrderBill(orderBillData);
 
-        return new Response(JSON.stringify({ bill, orderBills: createdOrderBills }), {
+        return new Response(JSON.stringify({ bill, orderBills: orderBills }), {
             status: 200,
             headers: corsHeaders,
         });
