@@ -1,18 +1,18 @@
 import { ChatOpenAI } from "@langchain/openai";
-import {
-  ChatPromptTemplate,
-  MessagesPlaceholder,
-} from "@langchain/core/prompts";
+import { ChatPromptTemplate } from "@langchain/core/prompts";
+import { RunnableSequence } from "@langchain/core/runnables";
 
-const llm = new ChatOpenAI({
+/**
+ * Define your chat model to use.
+ */
+const model = new ChatOpenAI({
   model: "gpt-4o-mini",
-  temperature: 0.4,
+  temperature: 1,
 });
 
 const prompt = ChatPromptTemplate.fromMessages([
-  ["system", "You are very powerful assistant, but don't know current events"],
-  ["human", "{review}"],
-  new MessagesPlaceholder("agent_scratchpad"),
+  ["system", "Tentukan sentimen pada review apakah negatif atau positif. jawab hanya dengan kata positif atau negatif"],
+  ["human", "{input}"],
 ]);
 
 const runnableAgent = RunnableSequence.from([
@@ -21,19 +21,9 @@ const runnableAgent = RunnableSequence.from([
   },
   prompt,
   model,
-  new OpenAIFunctionsAgentOutputParser(),
 ]);
 
-const executor = AgentExecutor.fromAgent({
-  agent: runnableAgent,
-});
-
 export const reviewSentimentAgent = async (input) => {
-  const result = await executor.invoke({
-    input,
-  });
-  return result;
+  const result = await runnableAgent.invoke({ input });
+  return result.content.toLowerCase();
 };
-
-
-
