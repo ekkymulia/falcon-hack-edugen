@@ -15,12 +15,12 @@ export async function GET(request) {
         const orderBillId = url.searchParams.get('id');
 
         if (orderBillId) {
-            const pengguna = await prisma.orderBill.findUnique({
+            const orderBill = await prisma.orderBill.findUnique({
                 where: { id: orderBillId },
             });
 
-            if (pengguna) {
-                return new Response(JSON.stringify(pengguna), {
+            if (orderBill) {
+                return new Response(JSON.stringify(orderBill), {
                     status: 200,
                     headers: corsHeaders,
                 });
@@ -31,9 +31,9 @@ export async function GET(request) {
                 });
             }
         } else {
-            const pengguna = await prisma.orderBill.findMany();
+            const orderBill = await prisma.orderBill.findMany();
 
-            return new Response(JSON.stringify(pengguna), {
+            return new Response(JSON.stringify(orderBill), {
                 status: 200,
                 headers: corsHeaders,
             });
@@ -55,7 +55,7 @@ export async function POST(request) {
     
         await postOrderBill(data);
 
-        return new Response(JSON.stringify(pengguna), {
+        return new Response(JSON.stringify(orderBill), {
             status: 200,
             headers: corsHeaders,
         });
@@ -90,7 +90,7 @@ export async function postOrderBill(data) {
         });
     }
 
-    const pengguna = await prisma.orderBill.create({
+    const orderBill = await prisma.orderBill.create({
         data: {
             bill_id: data.bill_id,
             user_id: data.user_id,
