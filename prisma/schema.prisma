@@ -20,6 +20,7 @@ model Merchant {
   id                   String                 @id @default(auto()) @map("_id") @db.ObjectId
   user_id              String                 @db.ObjectId
   nama                 String
+  gambar               String
   alamat               String
   provinsi_id          String
   kota_id              String

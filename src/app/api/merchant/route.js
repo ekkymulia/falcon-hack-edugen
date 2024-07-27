@@ -66,6 +66,7 @@ export async function POST(request) {
             data: {
                 user_id: user.id,
                 alamat: data.alamat,
+                gambar: data.gambar,
                 provinsi_id: data.provinsi_id,
                 kota_id: data.kota_id,
                 kecamatan_id: data.kecamatan_id,
