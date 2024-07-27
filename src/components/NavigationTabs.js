@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import Image from "next/image";
 
 import MobilIcon from "../../public/assets/images/feature/car.png";
@@ -9,24 +10,28 @@ import { Ellipsis } from "lucide-react";
 
 const NavigationTabs = () => {
   const tabs = [
-    { name: "Mobil", icon: MobilIcon },
-    { name: "Motor", icon: MotorIcon },
-    { name: "Makanan", icon: MakananIcon },
-    { name: "Belanja", icon: BelanjaIcon },
+    { name: "Mobil", icon: MobilIcon, href: "/car" },
+    { name: "Motor", icon: MotorIcon, href: "/bike" },
+    { name: "Makanan", icon: MakananIcon, href: "/food" },
+    { name: "Belanja", icon: BelanjaIcon, href: "/mart" },
   ];
 
   return (
     <div className="bg-white px-2 py-4 flex justify-around">
       {tabs.map((tab) => (
-        <div key={tab.name} className="flex flex-col items-center">
-          <Image src={tab.icon} alt={tab.name} width={48} height={48} />
-          <span>{tab.name}</span>
-        </div>
+        <Link key={tab.name} href={tab.href} passHref>
+          <div className="flex flex-col items-center cursor-pointer">
+            <Image src={tab.icon} alt={tab.name} width={48} height={48} />
+            <span>{tab.name}</span>
+          </div>
+        </Link>
       ))}
-      <div className="flex flex-col items-center">
-        <Ellipsis size={48} color="#22c55e" className="bg-[#d0ecdb] rounded-full" />
-        <span>Semua</span>
-      </div>
+      <Link href="/semua" passHref>
+        <div className="flex flex-col items-center cursor-pointer">
+          <Ellipsis size={48} color="#22c55e" className="bg-[#d0ecdb] rounded-full" />
+          <span>Semua</span>
+        </div>
+      </Link>
     </div>
   );
 };
