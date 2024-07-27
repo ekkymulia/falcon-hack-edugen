@@ -1,6 +1,7 @@
 import Image from "next/image";
 import CategorySelector from "@/components/CategorySelector";
 import { Heart, NotepadText, ChevronDown, Search } from "lucide-react";
+import Promotions from "@/components/Promotions";
 
 export default function Home() {
   return (
@@ -36,6 +37,7 @@ export default function Home() {
       </div>
       <div className="bg-white p-4 h-screen">
         <CategorySelector />
+        <Promotions />
       </div>
     </main>
   );
