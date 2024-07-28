@@ -8,7 +8,7 @@ import MinumanIcon from "../../public/assets/images/food/minuman.jpg";
 const menus = [
   {
     id: 1,
-    title: "Nasi Uduk Mang Rusdi",
+    title: "Sinar Bulan",
     rating: "4.8 (26)",
     category: "Aneka Nasi",
     price: "Gratis · Mulai dari 30 menit",

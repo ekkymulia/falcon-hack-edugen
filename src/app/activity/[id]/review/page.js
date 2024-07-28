@@ -5,24 +5,19 @@ import { Star } from "lucide-react";
 const RatingStars = ({ rating, setRating }) => {
   return (
     <div className="flex space-x-4">
-      {Array(5)
-        .fill(0)
-        .map((_, index) => {
-          const starIndex = index + 1;
-          return (
-            <span
-              key={starIndex}
-              onClick={() => setRating(starIndex)}
-              className="cursor-pointer"
-            >
-              <Star
-                size={24}
-                fill={starIndex <= rating ? "#FFD700" : "none"}
-                stroke={starIndex <= rating ? "#FFD700" : "currentColor"}
-              />
-            </span>
-          );
-        })}
+      {Array.from({ length: 5 }, (_, index) => index + 1).map((starIndex) => (
+        <span
+          key={starIndex}
+          onClick={() => setRating(starIndex)}
+          className="cursor-pointer"
+        >
+          <Star
+            size={24}
+            fill={starIndex <= rating ? "#FFD700" : "none"}
+            stroke={"black"}
+          />
+        </span>
+      ))}
     </div>
   );
 };
@@ -37,34 +32,59 @@ const ReviewForm = () => {
   const [serviceComment, setServiceComment] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e) => {
+  const postReviews = async (data) => {
+    try {
+      const response = await fetch("http://localhost:3000/api/review", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit review");
+      }
+
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error("Error:", error);
+      return null;
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitted(!isSubmitted);
-    console.log({
+    setIsSubmitted(false);
+
+    const result = await postReviews({
+      user_id: "66a594d8805baa2088ee7a78",
+      bill_id: "66a5992f13ae6c21dbf57192",
+      message: `${price} ${priceComment} ${taste} ${tasteComment} ${service} ${serviceComment}`,
       rating,
-      price,
-      priceComment,
-      taste,
-      tasteComment,
-      service,
-      serviceComment,
+      merchant_id: "66a53ba5ab6c4333f3138c7b",
     });
+
+    if (result) {
+      setIsSubmitted(true);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="flex flex-row space-x-4">
-        <label className=" text-xl font-medium text-gray-700">Rating</label>
+        <label className="text-xl font-medium text-black">Rating</label>
         <RatingStars rating={rating} setRating={setRating} />
       </div>
       <div>
-        <label className=" text-lg font-medium text-gray-700">
+        <label className="text-lg font-medium text-black">
           Apakah harga sudah sesuai?
         </label>
         <select
           value={price}
           onChange={(e) => setPrice(e.target.value)}
-          className="mt-1 w-full rounded-md border outline-none p-2 border-gray-300 shadow-sm"
+          className="mt-1 w-full rounded-md border outline-none p-2 border-gray-300 shadow-sm text-black"
         >
           <option value="">Pilih</option>
           <option value="mahal">Mahal</option>
@@ -75,17 +95,17 @@ const ReviewForm = () => {
           value={priceComment}
           onChange={(e) => setPriceComment(e.target.value)}
           placeholder="Keterangan tambahan"
-          className="resize-none outline-none border p-2 mt-2 w-full rounded-md border-gray-300 shadow-sm"
+          className="resize-none outline-none border p-2 mt-2 w-full rounded-md border-gray-300 shadow-sm text-black"
         />
       </div>
       <div>
-        <label className=" text-lg font-medium text-gray-700">
+        <label className="text-lg font-medium text-black">
           Bagaimana rasa makanan anda?
         </label>
         <select
           value={taste}
           onChange={(e) => setTaste(e.target.value)}
-          className="mt-1 w-full rounded-md border outline-none p-2 border-gray-300 shadow-sm"
+          className="mt-1 w-full rounded-md border outline-none p-2 border-gray-300 shadow-sm text-black"
         >
           <option value="">Pilih</option>
           <option value="enak">Enak</option>
@@ -96,17 +116,17 @@ const ReviewForm = () => {
           value={tasteComment}
           onChange={(e) => setTasteComment(e.target.value)}
           placeholder="Keterangan tambahan"
-          className="resize-none outline-none border p-2 mt-2 w-full rounded-md border-gray-300 shadow-sm"
+          className="resize-none outline-none border p-2 mt-2 w-full rounded-md border-gray-300 shadow-sm text-black"
         />
       </div>
       <div>
-        <label className=" text-lg font-medium text-gray-700">
+        <label className="text-lg font-medium text-black">
           Bagaimana dengan pelayanannya?
         </label>
         <select
           value={service}
           onChange={(e) => setService(e.target.value)}
-          className="mt-1 w-full rounded-md border outline-none p-2 border-gray-300 shadow-sm"
+          className="mt-1 w-full rounded-md border outline-none p-2 border-gray-300 shadow-sm text-black"
         >
           <option value="">Pilih</option>
           <option value="sangat baik">Sangat Baik</option>
@@ -117,13 +137,13 @@ const ReviewForm = () => {
           value={serviceComment}
           onChange={(e) => setServiceComment(e.target.value)}
           placeholder="Keterangan tambahan"
-          className="resize-none outline-none border p-2 mt-2 w-full rounded-md border-gray-300 shadow-sm"
+          className="resize-none outline-none border p-2 mt-2 w-full rounded-md border-gray-300 shadow-sm text-black"
         />
       </div>
       <div className="flex justify-center">
         <button
           type="submit"
-          className="bg-green-500 hover:bg-green-700 w-full text-white font-bold py-2 px-4 rounded"
+          className="bg-green-500 hover:bg-green-700 w-full text-white font-bold py-2 px-4 rounded text-black"
         >
           Submit
         </button>

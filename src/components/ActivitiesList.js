@@ -48,7 +48,7 @@ const activities = [
 const ActivitiesList = () => {
   return (
     <div className="p-4 bg-white">
-      <h2 className="text-lg font-bold mb-4">Aktivitas</h2>
+      <h2 className="text-lg font-bold mb-4 text-black">Aktivitas</h2>
       {activities.map((activity, index) => (
         <ActivityItem key={index} item={activity} />
       ))}

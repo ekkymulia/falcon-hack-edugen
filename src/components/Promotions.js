@@ -52,7 +52,7 @@ const Promotions = () => {
                 className="rounded-md"
               />
             </div>
-            <p className="font-bold text-[10px] text-orange-400 mt-2">PROMO</p>
+            <p className="font-bold text-[10px] text-orange-400 mt-2">Sedang Viral Untuk Kamu</p>
             <h3 className="font-bold text-sm text-black">{promo.nama}</h3>
             <p className="text-[10px] text-gray-500">
               {getRandomInt(10, 30) + " menit"} • {getRandomInt(1, 10) + " km"}
