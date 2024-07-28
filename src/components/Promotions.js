@@ -1,33 +1,17 @@
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
-import AnekaNasiIcon from "../../public/assets/images/food/aneka-nasi.jpg";
-import HidanganLautIcon from "../../public/assets/images/food/hidangan-laut.jpg";
-import AyamIcon from "../../public/assets/images/food/ayam.jpg";
+import getRecommendedProducts from "../app/api/relevantProduct/route";
 
-const promotions = [
-  {
-    title: "Nasi Uduk",
-    image: AnekaNasiIcon,
-    discount: "Diskon 50%",
-    duration: "25 menit",
-    distance: "2,1 km",
-  },
-  {
-    title: "Seafood Lobster",
-    image: HidanganLautIcon,
-    discount: "Diskon 40%",
-    duration: "30 menit",
-    distance: "3,0 km",
-  },
-  {
-    title: "Ayam Bakar",
-    image: AyamIcon,
-    discount: "Diskon 30%",
-    duration: "20 menit",
-    distance: "1,5 km",
-  },
-];
+const getRandomInt = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+const data = {user_id:'66a52a8dd96382f0af31aabb'}
+const promotions = getRecommendedProducts(data);
+console.log(promotions);
 
 const Promotions = () => {
   return (
@@ -40,8 +24,8 @@ const Promotions = () => {
         />
       </div>
       <div className="flex overflow-x-scroll space-x-4 scrollbar-hide">
-        {promotions.map((promo, index) => (
-          <div key={index} className="min-w-[150px] bg-white rounded-lg">
+        {promotions.foreach((promo) => (
+          <div className="min-w-[150px] bg-white rounded-lg">
             <Image
               src={promo.image}
               alt={promo.title}
@@ -51,7 +35,7 @@ const Promotions = () => {
             <p className="font-bold text-[10px] text-orange-400 mt-2">PROMO</p>
             <h3 className="font-bold text-sm">{promo.title}</h3>
             <p className="text-[10px] text-gray-500">
-              {promo.duration} • {promo.distance}
+              {getRandomInt(10,30) + "menit"} • {getRandomInt(1,10) + " km"}
             </p>
             <p className="text-[8px] bg-orange-200 inline p-1 rounded">
               {promo.discount}
