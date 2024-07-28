@@ -10,7 +10,7 @@ import {
 const BottomNavigation = () => {
   return (
     <div className="bottom-0 bg-white relative w-full inset-x-0 py-2 px-4 flex flex-row justify-evenly border-t border-gray-200">
-      <Link href="/home" passHref>
+      <Link href="/" passHref>
         <div className="flex flex-col justify-center items-center cursor-pointer">
           <House size={24} />
           <span className="text-xs">Beranda</span>
