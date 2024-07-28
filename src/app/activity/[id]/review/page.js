@@ -34,7 +34,7 @@ const ReviewForm = () => {
 
   const postReviews = async (data) => {
     try {
-      const response = await fetch("http://localhost:3000/api/review", {
+      const response = await fetch("https://angelhacks-fullstack-msi3blwcf-ekkymulias-projects.vercel.app//api/review", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
