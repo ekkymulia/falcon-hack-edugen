@@ -39,7 +39,7 @@ const ReviewForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitted(true);
+    setIsSubmitted(!isSubmitted);
     console.log({
       rating,
       price,
@@ -64,7 +64,7 @@ const ReviewForm = () => {
         <select
           value={price}
           onChange={(e) => setPrice(e.target.value)}
-          className="mt-1  w-full rounded-md border outline-none p-2 border-gray-300 shadow-sm"
+          className="mt-1 w-full rounded-md border outline-none p-2 border-gray-300 shadow-sm"
         >
           <option value="">Pilih</option>
           <option value="mahal">Mahal</option>
@@ -75,7 +75,7 @@ const ReviewForm = () => {
           value={priceComment}
           onChange={(e) => setPriceComment(e.target.value)}
           placeholder="Keterangan tambahan"
-          className="resize-none outline-none border p-2 mt-2  w-full rounded-md border-gray-300 shadow-sm"
+          className="resize-none outline-none border p-2 mt-2 w-full rounded-md border-gray-300 shadow-sm"
         />
       </div>
       <div>
@@ -85,7 +85,7 @@ const ReviewForm = () => {
         <select
           value={taste}
           onChange={(e) => setTaste(e.target.value)}
-          className="mt-1  w-full rounded-md border outline-none p-2 border-gray-300 shadow-sm"
+          className="mt-1 w-full rounded-md border outline-none p-2 border-gray-300 shadow-sm"
         >
           <option value="">Pilih</option>
           <option value="enak">Enak</option>
@@ -96,7 +96,7 @@ const ReviewForm = () => {
           value={tasteComment}
           onChange={(e) => setTasteComment(e.target.value)}
           placeholder="Keterangan tambahan"
-          className="resize-none outline-none border p-2 mt-2  w-full rounded-md border-gray-300 shadow-sm"
+          className="resize-none outline-none border p-2 mt-2 w-full rounded-md border-gray-300 shadow-sm"
         />
       </div>
       <div>
@@ -106,7 +106,7 @@ const ReviewForm = () => {
         <select
           value={service}
           onChange={(e) => setService(e.target.value)}
-          className="mt-1  w-full rounded-md border outline-none p-2 border-gray-300 shadow-sm"
+          className="mt-1 w-full rounded-md border outline-none p-2 border-gray-300 shadow-sm"
         >
           <option value="">Pilih</option>
           <option value="sangat baik">Sangat Baik</option>
@@ -117,7 +117,7 @@ const ReviewForm = () => {
           value={serviceComment}
           onChange={(e) => setServiceComment(e.target.value)}
           placeholder="Keterangan tambahan"
-          className="resize-none outline-none border p-2 mt-2  w-full rounded-md border-gray-300 shadow-sm"
+          className="resize-none outline-none border p-2 mt-2 w-full rounded-md border-gray-300 shadow-sm"
         />
       </div>
       <div className="flex justify-center">
@@ -129,7 +129,7 @@ const ReviewForm = () => {
         </button>
       </div>
       {isSubmitted && (
-        <div className="mt-4 text-center text-xs font-medium text-green-700 break-words">
+        <div className="text-center text-xs font-medium text-green-700">
           Thank you for your review! You have earned 50 Grab Points. Have a
           great day!
         </div>
@@ -140,7 +140,7 @@ const ReviewForm = () => {
 
 export default function Home() {
   return (
-    <main className="bg-white min-h-screen w-xs mx-8 p-4">
+    <main className="bg-white min-h-screen max-w-md mx-8 p-4">
       <div className="flex flex-col items-center justify-center h-full bg-white">
         <ReviewForm />
       </div>
