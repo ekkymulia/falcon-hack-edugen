@@ -7,6 +7,7 @@ import MinumanIcon from "../../public/assets/images/food/minuman.jpg";
 
 const menus = [
   {
+    id: 1,
     title: "Nasi Uduk Mang Rusdi",
     rating: "4.8 (26)",
     category: "Aneka Nasi",
@@ -15,6 +16,7 @@ const menus = [
     image: AnekaNasiIcon,
   },
   {
+    id: 2,
     title: "Ayam Gacoan - Fatmawati",
     rating: "4.7 (2rb+)",
     category: "Bakmi",
@@ -23,6 +25,7 @@ const menus = [
     image: AyamIcon,
   },
   {
+    id: 3,
     title: "Burger Bageur",
     rating: "4.7 (1rb+)",
     category: "Cepat Saji",
@@ -31,6 +34,7 @@ const menus = [
     image: CepatSajiIcon,
   },
   {
+    id: 4,
     title: "Milkshake Europano",
     rating: "4.8 (1rb+)",
     category: "Minuman",
