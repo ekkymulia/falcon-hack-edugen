@@ -13,7 +13,7 @@ const Menu = ({ menu }) => {
         />
       </div>
       <div>
-        <h3 className="font-bold text-sm">{menu.title}</h3>
+        <h3 className="font-bold text-sm text-black">{menu.title}</h3>
         <div className="flex items-center space-x-1">
           <Star fill="#FFD600" strokeWidth={0} size={14} />
           <p className="text-xs text-gray-600">
@@ -23,7 +23,7 @@ const Menu = ({ menu }) => {
         <p className="text-xs text-gray-600">{menu.price}</p>
         <div className="inline-flex space-x-1 border rounded-md p-1 items-center">
           <Tag size={12} fill="#ea580c" color="#fff" />
-          <p className="text-[10px]">{menu.discount}</p>
+          <p className="text-[10px] text-black">{menu.discount}</p>
         </div>
       </div>
     </div>
