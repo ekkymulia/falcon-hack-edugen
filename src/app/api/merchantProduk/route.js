@@ -14,6 +14,7 @@ export async function GET(request) {
     try {
         const url = new URL(request.url);
         const merchantProdukId = url.searchParams.get('id');
+        const merchantId = url.searchParams.get('merchant_id');
 
         if (merchantProdukId) {
             const merchantProduk = await prisma.merchantProduk.findUnique({
@@ -31,6 +32,15 @@ export async function GET(request) {
                     headers: corsHeaders,
                 });
             }
+        } else if (merchantId) {
+            const merchantProduk = await prisma.merchantProduk.findMany({
+                where: { merchant_id: merchantId },
+            });
+
+            return new Response(JSON.stringify(merchantProduk), {
+                status: 200,
+                headers: corsHeaders,
+            });
         } else {
             const merchantProduk = await prisma.merchantProduk.findMany();
 
