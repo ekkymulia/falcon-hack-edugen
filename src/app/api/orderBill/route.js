@@ -5,35 +5,35 @@ const prisma = new PrismaClient();
 const corsHeaders = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
 };
 
 export async function GET(request) {
     try {
         const url = new URL(request.url);
-        const userId = url.searchParams.get('id');
+        const orderBillId = url.searchParams.get('id');
 
-        if (userId) {
-            const pengguna = await prisma.user.findUnique({
-                where: { id: userId },
+        if (orderBillId) {
+            const orderBill = await prisma.orderBill.findUnique({
+                where: { id: orderBillId },
             });
 
-            if (pengguna) {
-                return new Response(JSON.stringify(pengguna), {
+            if (orderBill) {
+                return new Response(JSON.stringify(orderBill), {
                     status: 200,
                     headers: corsHeaders,
                 });
             } else {
-                return new Response(JSON.stringify({ error: 'User Not Found' }), {
+                return new Response(JSON.stringify({ error: 'orderBill Not Found' }), {
                     status: 404,
                     headers: corsHeaders,
                 });
             }
         } else {
-            const pengguna = await prisma.user.findMany();
+            const orderBill = await prisma.orderBill.findMany();
 
-            return new Response(JSON.stringify(pengguna), {
+            return new Response(JSON.stringify(orderBill), {
                 status: 200,
                 headers: corsHeaders,
             });
@@ -52,17 +52,10 @@ export async function GET(request) {
 export async function POST(request) {
     try {
         const data = await request.json();
+    
+        await postOrderBill(data);
 
-        const pengguna = await prisma.user.create({
-            data: {
-                nama: data.nama,
-                role_id: "1",
-                email: data.email,
-                password: data.password,
-            },
-        });
-
-        return new Response(JSON.stringify(pengguna), {
+        return new Response(JSON.stringify(orderBill), {
             status: 200,
             headers: corsHeaders,
         });
@@ -77,30 +70,62 @@ export async function POST(request) {
     }
 }
 
+export async function postOrderBill(data) {
+    const billExists = await prisma.bill.findUnique({
+        where: { id: data.bill_id },
+    });
+
+    const userExists = await prisma.user.findUnique({
+        where: { id: data.user_id },
+    });
+
+    const merchantProdukExists = await prisma.merchantProduk.findUnique({
+        where: { id: data.merchant_produk_id },
+    });
+
+    if (!billExists || !userExists || !merchantProdukExists) {
+        return new Response(JSON.stringify({ error: 'Invalid bill_id' }), {
+            status: 400,
+            headers: corsHeaders,
+        });
+    }
+
+    const orderBill = await prisma.orderBill.create({
+        data: {
+            bill_id: data.bill_id,
+            user_id: data.user_id,
+            merchant_produk_id: data.merchant_produk_id,
+            qty: data.qty,
+            total_price: data.price * data.qty,
+            notes: data.notes
+        },
+    });
+}
+
 export async function DELETE(request) {
     try {
         const url = new URL(request.url);
-        const userId = url.searchParams.get('id');
+        const orderBillId = url.searchParams.get('id');
 
-        if (!userId) {
+        if (!orderBillId) {
             return new Response(JSON.stringify({ error: 'Missing id parameter' }), {
                 status: 400,
                 headers: corsHeaders,
             });
         }
 
-        const deletedUser = await prisma.user.delete({
-            where: { id: userId },
+        const deletedRecord = await prisma.orderBill.delete({
+            where: { id: orderBillId },
         });
 
-        return new Response(JSON.stringify(deletedUser), {
+        return new Response(JSON.stringify(deletedRecord), {
             status: 200,
             headers: corsHeaders,
         });
     } catch (error) {
         console.error(error);
         if (error.code === 'P2025') {
-            return new Response(JSON.stringify({ error: 'User Not Found' }), {
+            return new Response(JSON.stringify({ error: 'Record Not Found' }), {
                 status: 404,
                 headers: corsHeaders,
             });

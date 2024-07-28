@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,117 +8,86 @@ datasource db {
 }
 
 model User {
-  id                String @id @default(auto()) @map("_id") @db.ObjectId
-  nama              String
-  role_id           String
-  email             String @unique
-  password          String
-  alamat            String
-  provinsi_id       String
-  kota_id           String
-  kecamatan_id      String
-  kelurahan_id      String
-  longitude         Float
-  latitude          Float
-  no_telp           String
-  email_verified    Boolean @default(false)
-  tipe_bisnis       String
-  rata_rata_penjualan Float
-  jenis_perangkat   String
-  Bill              Bill[]
-  Review            Review[]
-  OrderBill         OrderBill[]
-  LongtermReviewStore LongtermReviewStore[]
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  nama      String
+  role_id   String
+  email     String    @unique
+  password  String
+
+}
+
+model Merchant {
+  id                   String                 @id @default(auto()) @map("_id") @db.ObjectId
+  user_id              String                 @db.ObjectId
+  nama                 String
+  gambar               String
+  alamat               String
+  provinsi_id          String
+  kota_id              String
+  kecamatan_id         String
+  kelurahan_id         String
+  longitude            Float
+  latitude             Float
+  no_telp              String
+  email_verified       Boolean                @default(false)
+  tipe_bisnis          String
+  rata_rata_penjualan  Float
+  jenis_perangkat      String
 }
 
 model MerchantProduk {
-  id                String @id @default(auto()) @map("_id") @db.ObjectId
-  merchant_id       String
-  nama              String
-  gambar            String
-  deskripsi         String
-  qty               Int
-  price             Float
-  discount          Float
-  MerchantProdukVariant MerchantProdukVariant[]
-  OrderBill         OrderBill[]
+  id          String               @id @default(auto()) @map("_id") @db.ObjectId
+  merchant_id String               @db.ObjectId
+  nama        String
+  gambar      String
+  deskripsi   String
+  qty         Int
+  price       Float
+  discount    Float
 }
 
-model MerchantProdukVariant {
-  id                String @id @default(auto()) @map("_id") @db.ObjectId
-  merchant_produk_id String @db.ObjectId
-  nama              String
-  qty               Int
-  price             Float
-  discount          Float
-  MerchantProduk    MerchantProduk @relation(fields: [merchant_produk_id], references: [id])
-}
 
 model OrderBill {
-  id                String @id @default(auto()) @map("_id") @db.ObjectId
-  bill_id           String @db.ObjectId
-  user_id           String @db.ObjectId
-  merchant_produk_id String @db.ObjectId
-  qty               Int
-  total_price       Float
-  notes             String
-  Bill              Bill @relation(fields: [bill_id], references: [id])
-  User              User @relation(fields: [user_id], references: [id])
-  MerchantProduk    MerchantProduk @relation(fields: [merchant_produk_id], references: [id])
+  id                 String         @id @default(auto()) @map("_id") @db.ObjectId
+  bill_id            String         @db.ObjectId
+  user_id            String         @db.ObjectId
+  merchant_produk_id String         @db.ObjectId
+  qty                Int
+  total_price        Float
+  notes              String
 }
 
 model Bill {
-  id                String @id @default(auto()) @map("_id") @db.ObjectId
-  user_id           String @db.ObjectId
-  merchant_id       String
-  subtotal          Float
-  delivery_price    Float
-  total_bill        Float
-  notes             String
-  delivery_option_id String @db.ObjectId
-  User              User @relation(fields: [user_id], references: [id])
-  DeliveryOption    DeliveryOption @relation(fields: [delivery_option_id], references: [id])
-  OrderBill         OrderBill[]
-  Review            Review[]
-  LongtermReviewStore LongtermReviewStore[]  // Add this line
+  id                 String         @id @default(auto()) @map("_id") @db.ObjectId
+  user_id            String         @db.ObjectId
+  merchant_id        String         @db.ObjectId
+  status             Int
+  subtotal           Float
+  delivery_price     Float
+  total_bill         Float
+  notes              String
+  delivery_option_id String
 }
 
 model Review {
-  id                String @id @default(auto()) @map("_id") @db.ObjectId
-  user_id           String @db.ObjectId
-  bill_id           String @db.ObjectId
-  message           String
-  rating            Int
-  User              User @relation(fields: [user_id], references: [id])
-  Bill              Bill @relation(fields: [bill_id], references: [id])
-  LongtermReviewStore LongtermReviewStore[]
+  id                   String                 @id @default(auto()) @map("_id") @db.ObjectId
+  user_id              String                 @db.ObjectId
+  bill_id              String                 @db.ObjectId
+  message              String
+  rating               Int
 }
 
 model LongtermReviewStore {
-  id                      String @id @default(auto()) @map("_id") @db.ObjectId
-  review_id               String @db.ObjectId
-  user_id                 String @db.ObjectId
-  merchant_id             String
-  bill_id                 String @db.ObjectId
-  things_longterm_review_store_id String @db.ObjectId
-  things_to_remember      String
-  Review                  Review @relation(fields: [review_id], references: [id])
-  User                    User @relation(fields: [user_id], references: [id])
-  Bill                    Bill @relation(fields: [bill_id], references: [id])
-  ThingsLongtermReviewStore ThingsLongtermReviewStore @relation(fields: [things_longterm_review_store_id], references: [id])
+  id                             String                     @id @default(auto()) @map("_id") @db.ObjectId
+  review_id                      String                     @db.ObjectId
+  user_id                        String                     @db.ObjectId
+  merchant_id                    String                     @db.ObjectId
+  bill_id                        String                     @db.ObjectId
+  category                       String                    
+  things_to_remember             String
 }
 
 model ThingsLongtermReviewStore {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  nama  String
-  LongtermReviewStore LongtermReviewStore[]
-}
-
-model DeliveryOption {
-  id                String @id @default(auto()) @map("_id") @db.ObjectId
-  nama              String
-  description       String
-  time_multiplier   Float
-  price_multiplier  Float
-  Bill              Bill[]
+  id                     String                 @id @default(auto()) @map("_id") @db.ObjectId
+  nama                   String
 }
