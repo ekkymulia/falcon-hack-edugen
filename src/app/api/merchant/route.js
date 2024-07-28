@@ -65,6 +65,7 @@ export async function POST(request) {
         const merchant = await prisma.merchant.create({
             data: {
                 user_id: user.id,
+                nama: data.nama_merchant,
                 alamat: data.alamat,
                 gambar: data.gambar,
                 provinsi_id: data.provinsi_id,
