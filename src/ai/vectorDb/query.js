@@ -28,7 +28,7 @@ const vectorStore = await PineconeStore.fromExistingIndex(
 /* Search the vector DB independently with metadata filters */
 
 export const pineconeQuery = async (question, store) => {
-    const results = await vectorStore.similaritySearch(question, 2);
+    const results = await vectorStore.similaritySearch(question, 5);
     console.log(results);
     return results;
       
