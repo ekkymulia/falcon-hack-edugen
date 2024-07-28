@@ -18,7 +18,7 @@ const prompt = ChatPromptTemplate.fromMessages([
   rasa (cth: rasa manis/asam/pedas)
   keterangan tambahan lainnya (cth: berat, komposisi bahan, asal produk)
   kalimat jangan hiperbola, dan sertakan keyword keyword agar bisa terindex dengan prompt similarity
-  Berikan output dalam satu paragraf.
+  Berikan output dalam satu paragraf yang singkat tapi banyak mencakup keyword.
   `],
   ["human", "{input}"],
 ]);

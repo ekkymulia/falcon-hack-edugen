@@ -13,22 +13,37 @@ const corsHeaders = {
 export async function POST(request) {
     try {
         const data = await request.json();
+        const orderBill = await prisma.orderBill.findMany({
+            where: {
+              bill_id: data.bill_id,
+            },
+        });
 
-        const reviewEvaluator = await reviewEvaluatorCrew(data.review);
+        let produk = [];
+        const reviewPromises = orderBill.map(async (element) => {
+          return await prisma.merchantProduk.findFirst({
+            where: {
+              id: element.merchant_produk_id,
+            },
+          });
+        });
+        
+        produk = await Promise.all(reviewPromises);
+
+        const reviewEvaluator = await reviewEvaluatorCrew(data.message, produk);
 
         const review = await prisma.Review.create({
             data: {
                 user_id: data.user_id,
                 bill_id: data.bill_id,
-                message: data.review,
+                message: data.message,
                 rating: data.rating,
             },
         });
 
         for (const [key, value] of Object.entries(reviewEvaluator.hasilEkstrasi)) {
             try {
-                const param = JSON.parse(reviewEvaluator.paramObject)[key];
-                
+
                 if(!value){
                     continue;
                 }
@@ -39,8 +54,8 @@ export async function POST(request) {
                         user_id: data.user_id ?? null,
                         merchant_id: data.merchant_id ?? null,
                         bill_id: data.bill_id ?? null,
-                        things_longterm_review_store_id: param.id ?? null,
-                        things_to_remember: value ?? null,
+                        category: value[0] ?? null,
+                        things_to_remember: value[1] ?? null,
                     },
                 });
             } catch (error) {
@@ -48,7 +63,7 @@ export async function POST(request) {
             }
         }
 
-        return new Response(JSON.stringify(review), {
+        return new Response(JSON.stringify(produk), {
             status: 200,
             headers: corsHeaders,
         });

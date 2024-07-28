@@ -83,7 +83,7 @@ model LongtermReviewStore {
   user_id                        String                     @db.ObjectId
   merchant_id                    String                     @db.ObjectId
   bill_id                        String                     @db.ObjectId
-  things_longterm_review_store_id String                    @db.ObjectId
+  category                       String                    
   things_to_remember             String
 }
 

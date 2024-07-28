@@ -10,19 +10,17 @@ const model = new ChatOpenAI({
   temperature: 1,
 });
 
-const prompt = ChatPromptTemplate.fromMessages([
-  ["system", `Identifikasi dan rangkumlah hal yang berkaitan tentang pengguna yang dapat diingat, misalnya rasa, harga, dan selera. Berikanlah kategori yang sesuai dan tampilkan hasil dengan dipisahkan oleh []. Contoh jawaban: [[harga, pengguna suka yang murah],[rasa,pengguna suka yang manis],[kemasan,pengguna suka yang lucu],[pengiriman,pengguna tidak suka menunggu lama],[makanan,pengguna suka mie pedas]]. Berikan hasil dalam lowercase dan tanpa tanda kutip.`],
-  ["human", "Bill: Porduk yang dibeli: {produk}. Review: {review}"],
-]);
+const prompt = ChatPromptTemplate.fromMessages(
+  ["system", "Indentikfikasi lah dari data yang diberikan untuk memberikan summary rangkuman terhadap restoran, buatkan 3 paragraf masing masing pada topik: HARGA, RASA dan LAYANAN dari feedback yang ada. tampilkan hasil dengan dipisahkan oleh []. Contoh jawaban: [[rasa, Restoran ini sering mendapat pujian. Beberapa customer mendeskripsikan rasanya enak, gurih, bumbunya berasa.],[harga,Sebagian besar customer merasa harga di restoran ini murah dan banyak promo.],[Layanan,Beberapa customer mengeluhkan proses masak yang lumayan lama.]. Berikan hasil dalam lowercase dan tanpa tanda kutip."],
+  ["human", "Produk: {produk}. Review: {review}"],
+);
 
 const runnableAgent = RunnableSequence.from([
   prompt,
   model,
 ]);
 
-export const reviewParameterExtractorAgent = async (produk, review) => {
-    console.log("Parameter:", produk);
-    console.log("Review:", review);
+export const reviewGeneratedSummaryAgent = async (produk, review) => {
   
     const result = await runnableAgent.invoke({ produk, review });
   

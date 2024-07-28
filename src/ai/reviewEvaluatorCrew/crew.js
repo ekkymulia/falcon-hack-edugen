@@ -3,7 +3,7 @@ import { reviewSentimentAgent } from "./reviewSentimentAgent";
 import { reviewParameterExtractorAgent } from "./reviewParameterExtractorAgent";
 
 
-export const reviewEvaluatorCrew = async (input) => {
+export const reviewEvaluatorCrew = async (input, produk) => {
     try {
         const sentimentReview = await reviewSentimentAgent(input);
 
@@ -13,7 +13,7 @@ export const reviewEvaluatorCrew = async (input) => {
         const paramObject = JSON.stringify(param);
         console.log("Parsed Parameters Object:", paramObject);
 
-        const hasilEkstrasi = await reviewParameterExtractorAgent(paramObject, input);
+        const hasilEkstrasi = await reviewParameterExtractorAgent(JSON.stringify(produk), input);
         console.log("Extracted Results:", hasilEkstrasi);
 
 
