@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Star, Globe, Tag } from "lucide-react";
+import { Star, Globe, Tag, Utensils, HandCoins, HandPlatter } from "lucide-react";
 import MenuItem from "@/components/MenuItem";
 
 import FoodBackground from "/public/assets/images/food/food1.jpg";
@@ -97,6 +97,41 @@ export default function Home() {
               <Tag size={16} fill="#ea580c" color="#fff" />
             </span>
             KOTA SOBAT 10rb min 40rb
+          </div>
+        </div>
+      </div>
+      <div className="relative z-10 p-4 bg-white rounded-lg shadow-md mb-4 m-8">
+        <h2 className="text-xl font-bold">Rangkuman Gourmand AI</h2>
+        <div className="text-sm text-gray-600 mb-2">
+          <hr className="border-gray-300 my-2" />
+          <div className="flex items-center mb-2">
+            <span className="mr-2">
+              <Utensils size={16} />
+            </span>
+            <div className="flex flex-col">
+              <p className="font-semibold">Rasa</p>
+              <p className="text-[10px]">Restoran ini sering mendapat pujian. Beberapa customer mendeskripsikan rasanya enak, gurih, bumbunya berasa.</p>
+            </div>
+          </div>
+          <hr className="border-gray-300 my-2" />
+          <div className="flex items-center mb-2">
+            <span className="mr-2">
+              <HandCoins size={16} />
+            </span>
+            <div className="flex flex-col">
+              <p className="font-semibold">Harga</p>
+              <p className="text-[10px]">Sebagian besar customer merasa harga di restoran ini murah dan banyak promo.</p>
+            </div>
+          </div>
+          <hr className="border-gray-300 my-2" />
+          <div className="flex items-center mb-2">
+            <span className="mr-2">
+              <HandPlatter size={16} />
+            </span>
+            <div className="flex flex-col">
+              <p className="font-semibold">Layanan</p>
+              <p className="text-[10px]">Beberapa customer mengeluhkan proses masak yang lumayan lama.</p>
+            </div>
           </div>
         </div>
       </div>
