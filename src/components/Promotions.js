@@ -15,7 +15,7 @@ const Promotions = () => {
   useEffect(() => {
     const fetchPromotions = async () => {
       const response = await fetch(
-        "https://angelhacks-fullstack-msi3blwcf-ekkymulias-projects.vercel.app//api/relevantProduct",
+        "https://angelhacks-fullstack-msi3blwcf-ekkymulias-projects.vercel.app/api/relevantProduct",
         {
           method: "POST",
           headers: {

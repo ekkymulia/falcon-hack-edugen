@@ -20,7 +20,7 @@ const ReviewSummary = () => {
   useEffect(() => {
     const fetchReviewSummary = async () => {
       const response = await fetch(
-        "https://angelhacks-fullstack-msi3blwcf-ekkymulias-projects.vercel.app//api/review/merchant?id=66a53ba5ab6c4333f3138c7b",
+        "https://angelhacks-fullstack-msi3blwcf-ekkymulias-projects.vercel.app/api/review/merchant?id=66a53ba5ab6c4333f3138c7b",
         {
           method: "GET",
           headers: {
