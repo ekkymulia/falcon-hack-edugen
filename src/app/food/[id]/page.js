@@ -57,7 +57,7 @@ export default function Home() {
         />
       </div>
       <div className="relative z-10 p-4 bg-white rounded-lg shadow-md mb-4 m-8 mt-20">
-        <h2 className="text-xl font-bold">Kaca Mata - Grand Wijaya Center</h2>
+        <h2 className="text-xl font-bold text-black">Sinar Bulan</h2>
         <hr className="border-gray-300 my-2" />
         <div className="flex items-center text-xs text-gray-600 mb-2 py-1">
           <p className="flex items-center mr-1">
@@ -101,7 +101,7 @@ export default function Home() {
         </div>
       </div>
       <div className="relative z-10 p-4 bg-white rounded-lg shadow-md mb-4 m-8">
-        <h2 className="text-xl font-bold">Rangkuman Gourmand AI</h2>
+        <h2 className="text-xl font-bold text-black">Rangkuman Gourmand AI</h2>
         <div className="text-sm text-gray-600 mb-2">
           <hr className="border-gray-300 my-2" />
           <div className="flex items-center mb-2">
