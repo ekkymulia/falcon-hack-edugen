@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+
 import Header from "@/components/Header";
 import NavigationTabs from "@/components/NavigationTabs";
 import BottomNavigation from "@/components/BottomNavigation";
@@ -8,9 +8,6 @@ import BottomNavigation from "@/components/BottomNavigation";
 export default function CourseView() {
   const [course, setCourse] = useState(null);
   const [pdfUrl, setPdfUrl] = useState('');
-  const router = useRouter();
-  const { id } = router.query;
-
   useEffect(() => {
     async function fetchCourse() {
       if (!id) return;
