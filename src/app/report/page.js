@@ -1,9 +1,9 @@
-import Header from "../components/Header";
-import NavigationTabs from "../components/NavigationTabs";
-import MainContent from "../components/MainContent";
+import Header from "@/components/Header";
+import NavigationTabs from "@/components/NavigationTabs";
+import MainContent from "@/components/MainContent";
 import BottomNavigation from "@/components/BottomNavigation";
 
-export default function Home() {
+export default function Report() {
   return (
     <main className="bg-white min-h-screen text-black">
       <div className="fixed top-0 w-full z-20">

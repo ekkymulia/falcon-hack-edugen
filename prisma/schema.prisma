@@ -8,86 +8,72 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  nama      String
-  role_id   String
-  email     String    @unique
-  password  String
-
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  role     String
+  email    String @unique
+  password String
 }
 
-model Merchant {
-  id                   String                 @id @default(auto()) @map("_id") @db.ObjectId
-  user_id              String                 @db.ObjectId
-  nama                 String
-  gambar               String
-  alamat               String
-  provinsi_id          String
-  kota_id              String
-  kecamatan_id         String
-  kelurahan_id         String
-  longitude            Float
-  latitude             Float
-  no_telp              String
-  email_verified       Boolean                @default(false)
-  tipe_bisnis          String
-  rata_rata_penjualan  Float
-  jenis_perangkat      String
+model Subject {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  modules Module[]
 }
 
-model MerchantProduk {
-  id          String               @id @default(auto()) @map("_id") @db.ObjectId
-  merchant_id String               @db.ObjectId
-  nama        String
-  gambar      String
-  deskripsi   String
-  qty         Int
-  price       Float
-  discount    Float
+model Module {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  fileId    String      @db.ObjectId
+  file      File        @relation(fields: [fileId], references: [id])
+  Subject   Subject?    @relation(fields: [subjectId], references: [id])
+  subjectId String?     @db.ObjectId
+  QuizModel QuizModel[]
 }
 
-
-model OrderBill {
-  id                 String         @id @default(auto()) @map("_id") @db.ObjectId
-  bill_id            String         @db.ObjectId
-  user_id            String         @db.ObjectId
-  merchant_produk_id String         @db.ObjectId
-  qty                Int
-  total_price        Float
-  notes              String
+model File {
+  id     String   @id @default(auto()) @map("_id") @db.ObjectId
+  name   String
+  parseId String
+  Module Module[]
 }
 
-model Bill {
-  id                 String         @id @default(auto()) @map("_id") @db.ObjectId
-  user_id            String         @db.ObjectId
-  merchant_id        String         @db.ObjectId
-  status             Int
-  subtotal           Float
-  delivery_price     Float
-  total_bill         Float
-  notes              String
-  delivery_option_id String
+model QuizRoom {
+  id       String      @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  roomCode String
+  quizzes  QuizModel[]
 }
 
-model Review {
-  id                   String                 @id @default(auto()) @map("_id") @db.ObjectId
-  user_id              String                 @db.ObjectId
-  bill_id              String                 @db.ObjectId
-  message              String
-  rating               Int
+model QuizModel {
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  moduleId       String           @db.ObjectId
+  module         Module           @relation(fields: [moduleId], references: [id])
+  choiceQuestion Int
+  essayQuestion  Int
+  quizRoomId     String           @db.ObjectId
+  quizRoom       QuizRoom         @relation(fields: [quizRoomId], references: [id])
+  questions      QuestionAnswer[]
+  reports        QuizReport[]
 }
 
-model LongtermReviewStore {
-  id                             String                     @id @default(auto()) @map("_id") @db.ObjectId
-  review_id                      String                     @db.ObjectId
-  user_id                        String                     @db.ObjectId
-  merchant_id                    String                     @db.ObjectId
-  bill_id                        String                     @db.ObjectId
-  category                       String                    
-  things_to_remember             String
+model QuestionAnswer {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  question      String
+  correctAnswer String
+  userAnswer    String
+  correctness   String
+  feedback      String
+  quizModelId   String    @db.ObjectId
+  quizModel     QuizModel @relation(fields: [quizModelId], references: [id])
 }
 
-model ThingsLongtermReviewStore {
-  id                     String                 @id @default(auto()) @map("_id") @db.ObjectId
-  nama                   String
+model QuizReport {
+  id                  String    @id @default(auto()) @map("_id") @db.ObjectId
+  evaluation          String
+  score               Float
+  aiGeneratedFeedback String
+  suggestions         String
+  quizModelId         String    @db.ObjectId
+  quizModel           QuizModel @relation(fields: [quizModelId], references: [id])
 }
